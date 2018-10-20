@@ -3,6 +3,7 @@
 import sys
 import urllib.request, urllib.error
 import json
+import re
 from slackbot.bot import respond_to     # @botname: で反応するデコーダ
 from slackbot.bot import listen_to      # チャネル内発言で反応するデコーダ
 from slackbot.bot import default_reply  # 該当する応答がない場合に反応するデコーダ
@@ -29,20 +30,29 @@ def find_citycode(cityname, lines):
             citylist = line[:-1].split(" ")
             citycode = citylist[1].split("\"")
             #print cityname[1]
-            return citycode
+            return citycode[1]
+
+def find_city(text, lines):
+    for line in lines:
+        citylist = line[:-1].split(" ")
+        c = citylist[0].split("\"")
+        c = ''.join(c)
+        if re.search(c, text):
+            return c
+    return '東京'
 
 def print_weather(res, cityname):
     print(u'今日から3日間の' + cityname[1] + 'の天気')
     for forecast in res['forecasts']:
-        print('**************************')
+        print('*******************************')
         print(forecast['dateLabel']+'('+forecast['date']+')').encode('utf-8')
         print(forecast['telop']).encode('utf-8')
-    print('**************************')
+    print('*******************************')
 
 def printbot_weather(res, cityname, message):
     msg0 = '今日から3日間の' + cityname[1] + 'の天気'
     message.send(msg0)
-    msg1 = '**************************'
+    msg1 = '*******************************'
     for forecast in res['forecasts']:
         msg2 = (forecast['dateLabel']+'('+forecast['date']+')').encode('utf-8')
         msg3 = (forecast['telop']).encode('utf-8')
@@ -82,19 +92,36 @@ def weather_reply(message):
     
     res = urllib.request.urlopen(url='http://weather.livedoor.com/forecast/webservice/json/v1?city=%s'%citycode).read()
     
-    # 読み込んだJSONデータを辞書型に変換
+    # 読み込んだJSONデータをディクショナリ型に変換
     res = json.loads(res)
     cityname = find_cityname(citycode, open_id())
     #print_weather(res, cityname)
     printbot_weather3(res, cityname, message)
 
+def weather_reply2(message):
+    text = message.body['text']     # メッセージを取り出す
+    citycode = '130010'
+    lines = open_id()
+    citycode = find_citycode(find_city(text, lines), lines)
+    url = 'http://weather.livedoor.com/forecast/webservice/json/v1?city=' + citycode
+    res = urllib.request.urlopen(url=url).read()
+    
+    # 読み込んだJSONデータをディクショナリ型に変換
+    res = json.loads(res)
+    cityname = find_cityname(citycode, lines)
+    #print_weather(res, cityname)
+    printbot_weather3(res, cityname, message)
 
 # bot宛のメッセージ
 @respond_to(r'天気')
 def mention_func(message):
-    weather_reply(message)
+    #text = message.body['text'] 
+    #print(text)
+    weather_reply2(message)
 
 # チャンネル内のbot宛以外の投稿
 @listen_to(r'天気')
 def listen_func(message):
-    weather_reply(message)
+    #text = message.body['text'] 
+    #print(text)
+    weather_reply2(message)

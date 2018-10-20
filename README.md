@@ -3,6 +3,15 @@ It is a Bot that responds to the weather forecast using [Slackbot](https://githu
 
 This Bot uses the Web API to obtain the weather forecast. It is [Libdoor's API](http://weather.livedoor.com/weather_hacks/webservice), JSON format.
 
+# How to use.
+When you write "Weather" and "City name" in Slack's message box, BOT will reply weather of that city name. (Only Japanese city.)
+
+
+Example:
+
+
+<img src="./example/pic/example.png" width=30%>
+
 # Build environment
 Refer to [README](https://github.com/lins05/slackbot/blob/develop/README.md).
 
@@ -15,4 +24,4 @@ Japanese README is [here](https://github.com/lins05/slackbot/blob/develop/README
 [Github | lins05/slackbot](https://github.com/lins05/slackbot)
 
 # Current status
-- The function to interpret the message sent on Slack and respond to the weather forecast of the designated area is not implemented yet.
+- All problems done.

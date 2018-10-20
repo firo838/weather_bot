@@ -80,7 +80,7 @@ def printbot_weather3(res, cityname, message):
         msg2 = forecast['dateLabel'] + '(' + forecast['date'] + ')'
         msg3 = (forecast['telop'])
         msgj = msgj + msg1 + '\n' + msg2 + '\n' + msg3 + '\n'
-    msgj = msgj + msg1 + '\n'
+    msgj = msgj + msg1
     msg = json.loads("[]")
     text = json.loads("{}")
     text["text"] = msgj

@@ -80,10 +80,22 @@ def printbot_weather3(res, cityname, message):
         msg2 = forecast['dateLabel'] + '(' + forecast['date'] + ')'
         msg3 = (forecast['telop'])
         msgj = msgj + msg1 + '\n' + msg2 + '\n' + msg3 + '\n'
-    msgj = msgj + msg1
+    msgj = msgj + msg1 + '\n'
     msg = json.loads("[]")
     text = json.loads("{}")
     text["text"] = msgj
+    msg.append(text)
+    message.send_webapi('', json.dumps(msg))
+
+def print_area(message, lines):
+    msg0 = '***検索可能なすべての地域***' + '\n'
+    for line in lines:
+        citylist = line[:-1].split(" ")
+        c = citylist[0].split("\"")
+        msg0 = msg0 + ''.join(c) + '\n'
+    msg = json.loads("[]")
+    text = json.loads("{}")
+    text["text"] = msg0
     msg.append(text)
     message.send_webapi('', json.dumps(msg))
 
@@ -95,6 +107,7 @@ def weather_reply(message):
     # 読み込んだJSONデータをディクショナリ型に変換
     res = json.loads(res)
     cityname = find_cityname(citycode, open_id())
+    #print_weather(res, cityname)
     printbot_weather3(res, cityname, message)
 
 def weather_reply2(message):
@@ -111,10 +124,17 @@ def weather_reply2(message):
     #print_weather(res, cityname)
     printbot_weather3(res, cityname, message)
 
+def area_reply(message):
+    print_area(message, open_id())
+
 # bot宛のメッセージ
 @respond_to(r'天気')
 def mention_func(message):
     weather_reply2(message)
+
+@respond_to(r'地域')
+def respond_area(message):
+    area_reply(message)
 
 # チャンネル内のbot宛以外の投稿
 @listen_to(r'天気')

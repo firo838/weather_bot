@@ -3,12 +3,12 @@
 import sys
 import urllib.request, urllib.error
 import json
-from slackbot.bot import resond_to     # @botname: で反応するデコーダ
+from slackbot.bot import respond_to     # @botname: で反応するデコーダ
 from slackbot.bot import listen_to      # チャネル内発言で反応するデコーダ
 from slackbot.bot import default_reply  # 該当する応答がない場合に反応するデコーダ
 
 def open_id():
-    ld = open("./id_list.txt")
+    ld = open("./id_list.txt", "r", encoding="utf-8")
     lines = ld.readlines()
     ld.close()
     return lines
@@ -64,7 +64,7 @@ def weather_reply(message):
 
 
 # bot宛のメッセージ
-@resond_to(r'天気')
+@respond_to(r'天気')
 def mention_func(message):
     weather_reply(message)
 

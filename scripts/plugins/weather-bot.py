@@ -150,6 +150,6 @@ def respond_area(message):
 def listen_func(message):
     weather_reply2(message)
 
-@respond_to(r'地域')
+@listen_to(r'地域')
 def listen_area(message):
     area_reply(message)

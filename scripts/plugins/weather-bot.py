@@ -38,8 +38,10 @@ def find_city(text, lines):
         c = citylist[0].split("\"")
         c = ''.join(c)
         if re.search(c, text):
+            print("call c")
             return c
-    return '東京'
+    print("call empty")
+    return ''
 
 def print_weather(res, cityname):
     print(u'今日から3日間の' + cityname[1] + 'の天気')
@@ -114,15 +116,22 @@ def weather_reply2(message):
     text = message.body['text']     # メッセージを取り出す
     citycode = '130010'
     lines = open_id()
-    citycode = find_citycode(find_city(text, lines), lines)
-    url = 'http://weather.livedoor.com/forecast/webservice/json/v1?city=' + citycode
-    res = urllib.request.urlopen(url=url).read()
-    
-    # 読み込んだJSONデータをディクショナリ型に変換
-    res = json.loads(res)
-    cityname = find_cityname(citycode, lines)
-    #print_weather(res, cityname)
-    printbot_weather3(res, cityname, message)
+    if find_city(text, lines) is '':
+        citycode = find_citycode(find_city(text, lines), lines)
+        url = 'http://weather.livedoor.com/forecast/webservice/json/v1?city=' + citycode
+        res = urllib.request.urlopen(url=url).read()
+
+        # 読み込んだJSONデータをディクショナリ型に変換
+        res = json.loads(res)
+        cityname = find_cityname(citycode, lines)
+        #print_weather(res, cityname)
+        printbot_weather3(res, cityname, message)
+    else:
+        default_respond(message)
+
+def default_respond(message):
+    msg = 'そんな都市ねーです。'
+    message.reply(msg)
 
 def area_reply(message):
     print_area(message, open_id())
@@ -140,3 +149,7 @@ def respond_area(message):
 @listen_to(r'天気')
 def listen_func(message):
     weather_reply2(message)
+
+@respond_to(r'地域')
+def listen_area(message):
+    area_reply(message)

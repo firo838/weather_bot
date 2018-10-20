@@ -15,5 +15,4 @@ Japanese README is [here](https://github.com/lins05/slackbot/blob/develop/README
 [Github | lins05/slackbot](https://github.com/lins05/slackbot)
 
 # Current status
-- It's so slow because it can't send messages at once.
 - The function to interpret the message sent on Slack and respond to the weather forecast of the designated area is not implemented yet.

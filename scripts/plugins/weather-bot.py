@@ -95,7 +95,6 @@ def weather_reply(message):
     # 読み込んだJSONデータをディクショナリ型に変換
     res = json.loads(res)
     cityname = find_cityname(citycode, open_id())
-    #print_weather(res, cityname)
     printbot_weather3(res, cityname, message)
 
 def weather_reply2(message):
@@ -115,13 +114,9 @@ def weather_reply2(message):
 # bot宛のメッセージ
 @respond_to(r'天気')
 def mention_func(message):
-    #text = message.body['text'] 
-    #print(text)
     weather_reply2(message)
 
 # チャンネル内のbot宛以外の投稿
 @listen_to(r'天気')
 def listen_func(message):
-    #text = message.body['text'] 
-    #print(text)
     weather_reply2(message)

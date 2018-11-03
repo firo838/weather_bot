@@ -20,8 +20,5 @@ Japanese README is [here](https://github.com/lins05/slackbot/blob/develop/README
 # Ref.
 [Slack | ワークスペースにツールを連携](https://get.slack.help/hc/ja/articles/215770388-API-%E3%83%88%E3%83%BC%E3%82%AF%E3%83%B3%E3%81%AE%E7%94%9F%E6%88%90%E3%81%A8%E5%86%8D%E7%94%9F%E6%88%90)
 
-
 [Github | lins05/slackbot](https://github.com/lins05/slackbot)
 
-# Current status
-- All problems done.

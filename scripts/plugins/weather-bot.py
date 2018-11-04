@@ -145,11 +145,11 @@ def mention_func(message):
 def respond_area(message):
     area_reply(message)
 
-# チャンネル内のbot宛以外の投稿
-@listen_to(r'天気')
-def listen_func(message):
-    weather_reply2(message)
-
-@listen_to(r'地域')
-def listen_area(message):
-    area_reply(message)
+## チャンネル内のbot宛以外の投稿
+#@listen_to(r'天気')
+#def listen_func(message):
+#    weather_reply2(message)
+#
+#@listen_to(r'地域')
+#def listen_area(message):
+#    area_reply(message)
